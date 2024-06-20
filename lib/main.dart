@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prova/controller/main_controller.dart';
+import 'package:books_app/controller/main_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {

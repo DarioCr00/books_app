@@ -1,4 +1,4 @@
-import 'package:prova/api/api_key.dart';
+import 'package:books_app/api/api_key.dart';
 
 String googleBooksApiUrl(String query) {
   final String baseUrl = "https://www.googleapis.com/books/v1/volumes";
