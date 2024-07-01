@@ -1,6 +1,7 @@
 import 'package:books_app/utils/api_url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:books_app/model/book.dart';
 
 class MainController {
   Future<List<Book>> fetchBooks(String query) async {
@@ -25,21 +26,5 @@ class MainController {
       print('Failed to fetch books. Status code: ${response.statusCode}');
     }
     throw Exception('Failed to load books');
-  }
-}
-
-class Book {
-  final String title;
-  final String? subtitle;
-  final String? thumbnail;
-
-  Book({required this.title, this.subtitle, this.thumbnail});
-
-  factory Book.fromJson(Map<String, dynamic> json) {
-    return Book(
-      title: json['title'],
-      subtitle: json['subtitle'],
-      thumbnail: json['imageLinks'] != null ? json['imageLinks']['thumbnail'] : null,
-    );
   }
 }
