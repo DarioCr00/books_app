@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:books_app/api/api_key.dart';
 
 String googleBooksApiUrl(String query) {

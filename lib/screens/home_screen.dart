@@ -1,40 +1,47 @@
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters
+
+import 'package:books_app/widgets/book_recommended_widget.dart';
+import 'package:books_app/widgets/popular_books_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/model/book.dart';
 
-class BookSearchPage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
+  final ScrollController scrollController;
+
+  const HomeScreen({Key ? key, required this.scrollController}) : super(key: key);
+
   @override
-  _BookSearchPageState createState() => _BookSearchPageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _BookSearchPageState extends State<BookSearchPage> {
+class _HomeScreenState extends State<HomeScreen> {
   final MainController _mainController = MainController();
-  final TextEditingController _searchController = TextEditingController();
-  List<Book> _books = [];
+  Book? _bookRecommended;
+  List<Book> _popularBooks = [];
   bool _isLoading = false;
   String _errorMessage = '';
 
-  void _searchBooks() async {
-    final query = _searchController.text;
-    if (query.isNotEmpty) {
+  @override
+  void initState() {
+    super.initState();
+    _fetchBooks();
+  }
+
+  Future<void> _fetchBooks() async {
+    try{
+      final bookRecommended = await _mainController.fetchBookRecommended();
+      final popularBooks = await _mainController.fetchPopularBooks();
       setState(() {
-        _isLoading = true;
-        _errorMessage = '';
+        _bookRecommended = bookRecommended;
+        _popularBooks = popularBooks;
       });
 
-      try {
-        final books = await _mainController.fetchBooks(query);
-        setState(() {
-          _books = books;
-          _isLoading = false;
-        });
-      } catch (e) {
-        setState(() {
-          _errorMessage = e.toString();
-          _isLoading = false;
-        });
-      }
+    } catch(e) {
+      setState(() {
+        _errorMessage = e.toString();
+        _isLoading = false;
+      });
     }
   }
 
@@ -42,54 +49,36 @@ class _BookSearchPageState extends State<BookSearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book Search'),
+        title: const Text('Home'),
+        centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                labelText: 'Search for books',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: _searchBooks,
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            if (_isLoading)
-              CircularProgressIndicator()
-            else if (_errorMessage.isNotEmpty)
-              Text(_errorMessage, style: TextStyle(color: Colors.red))
-            else
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _books.length,
-                  itemBuilder: (context, index) {
-                    final book = _books[index];
-                    final thumbnailUrl = book.thumbnail;
-                    return ListTile(
-                      leading: thumbnailUrl != null
-                          ? CachedNetworkImage(
-                              imageUrl: thumbnailUrl,
-                              placeholder: (context, url) => CircularProgressIndicator(),
-                              errorWidget: (context, url, error) {
-                                print('Error loading image: $thumbnailUrl');
-                                return Icon(Icons.error);
-                              },
-                            )
-                          : Icon(Icons.book),
-                      title: Text(book.title),
-                      subtitle: Text(book.subtitle ?? ''),
-                    );
-                  },
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
+          padding: const EdgeInsets.all(16.0),
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _errorMessage.isNotEmpty
+                  ? Center(child: Text(_errorMessage, style: const TextStyle(color: Colors.red)))
+                  : SingleChildScrollView(
+                      controller: widget.scrollController,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if(_bookRecommended != null)
+                            BookRecommendedWidget(book: _bookRecommended!),
+                          const SizedBox(height: 20),
+                          const Text(
+                            'Most popular',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          PopularBooksWidget(books: _popularBooks),
+                        ],
+                      ),
+                    ),
+            ),      
+    ); 
   }
 }

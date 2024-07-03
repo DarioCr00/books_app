@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:books_app/utils/api_url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -26,5 +28,18 @@ class MainController {
       print('Failed to fetch books. Status code: ${response.statusCode}');
     }
     throw Exception('Failed to load books');
+  }
+
+  Future<Book> fetchBookRecommended() async {
+    final books = await fetchBooks("Il Signore degli Anelli Tolkien");
+    if (books.isNotEmpty) {
+      return books.first;
+    } else {
+      throw Exception('No book found for the recommended one');
+    }
+  }
+
+  Future<List<Book>> fetchPopularBooks() async {
+    return await fetchBooks("Lo Hobbit");
   }
 }
