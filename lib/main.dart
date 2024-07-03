@@ -2,23 +2,27 @@
 
 import 'package:books_app/widgets/floating_navbar_widget.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:books_app/controller/main_controller.dart';
 
 void main() {
-  runApp(const MyApp());
+  Get.put(MainController()); // Inizializzare il MainController
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key ? key}) : super(key: key);
+  final MainController mainController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Books App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const FloatingBottomNavBar(),
-    );
+    return Obx(() {
+      return GetMaterialApp(
+        title: 'Books App',
+        themeMode: mainController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
+        darkTheme: ThemeData.dark(),
+        theme: ThemeData.light(),
+        home: const FloatingBottomNavBar(),
+      );
+    });
   }
 }
