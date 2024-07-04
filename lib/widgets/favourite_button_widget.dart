@@ -36,7 +36,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            _isFavourite ? 'Remove from Favourites' : 'Add to Favourites',
+            _isFavourite ? 'Remove' : 'Add',
             style: TextStyle(
               color: _isFavourite ? const Color.fromARGB(255, 165, 123, 31): null,
             ),
