@@ -7,14 +7,14 @@ import 'package:books_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hidable/hidable.dart';
 
-class FloatingBottomNavBar extends StatefulWidget {
-  const FloatingBottomNavBar({Key ? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key ? key}) : super(key: key);
 
   @override
-  _FloatingBottomNavBarState createState() => _FloatingBottomNavBarState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _FloatingBottomNavBarState extends State<FloatingBottomNavBar> {
+class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
   final ScrollController _scrollController = ScrollController();
@@ -59,7 +59,7 @@ class _FloatingBottomNavBarState extends State<FloatingBottomNavBar> {
           controller: _scrollController,
           enableOpacityAnimation: true,
           preferredWidgetSize: const Size.fromHeight(107),
-          child: Container(   
+          child: Container(  
           margin: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             color: Colors.white,
