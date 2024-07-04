@@ -1,4 +1,4 @@
-// ignore_for_file: use_super_parameters
+// ignore_for_file: use_super_parameters, use_key_in_widget_constructors
 
 import 'package:books_app/widgets/floating_navbar_widget.dart';
 import 'package:flutter/material.dart';

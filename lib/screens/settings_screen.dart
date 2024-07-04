@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text('Preferences'),
+          title: const Text('Preferences'),
           backgroundColor: currentTheme.appBarTheme.backgroundColor,
         ),
         body: Padding(
@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: ListView(
             children: [
               ListTile(
-                title: Text('Set Dark Mode'),
+                title: const Text('Set Dark Mode'),
                 trailing: Switch(
                   value: isDarkMode,
                   onChanged: (value) {
