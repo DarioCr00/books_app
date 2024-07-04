@@ -1,6 +1,7 @@
 // ignore_for_file: use_super_parameters
 
 import 'package:books_app/widgets/favourite_button_widget.dart';
+ //import 'package:books_finder/books_finder.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:books_app/model/book.dart';
@@ -56,16 +57,23 @@ class BookRecommendedWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(book.subtitle ?? ''),
+                    Text(
+                      book.subtitle ?? '',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
                     const SizedBox(height: 5),
-                    Text(truncatedDescription,
+                    Text(
+                      truncatedDescription,
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
-                      ), 
+                      ),
                     ),
                     const SizedBox(height: 10),
-                    const FavouriteButtonWidget(),
+                    FavouriteButtonWidget(book: book),
                   ],
                 ),
               ),

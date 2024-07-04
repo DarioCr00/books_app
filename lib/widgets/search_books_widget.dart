@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_super_parameters, avoid_print
 
+import 'package:books_app/widgets/favourite_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:books_app/controller/main_controller.dart';
@@ -81,6 +82,9 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
                   onPressed: _searchBooks,
                 ),
               ),
+              style: const TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
           const SizedBox(height: 20),
@@ -97,17 +101,18 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
                   final thumbnailUrl = book.thumbnail;
                   return ListTile(
                     leading: thumbnailUrl != null
-                        ? CachedNetworkImage(
-                            imageUrl: thumbnailUrl,
-                            placeholder: (context, url) => const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) {
-                              print('Error loading image: $thumbnailUrl');
-                              return const Icon(Icons.error);
-                            },
-                          )
-                        : const Icon(Icons.book),
+                      ? CachedNetworkImage(
+                        imageUrl: thumbnailUrl,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) {
+                          print('Error loading image: $thumbnailUrl');
+                          return const Icon(Icons.error);
+                        },
+                      )
+                      : const Icon(Icons.book),
                     title: Text(book.title),
                     subtitle: Text(book.subtitle ?? ''),
+                    trailing: FavouriteButtonWidget(book: book),
                   );
                 },
               ),

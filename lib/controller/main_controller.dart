@@ -20,16 +20,16 @@ class MainController extends GetxController {
 
   Future<List<Book>> fetchBooks(String query) async {
     final url = googleBooksApiUrl(query);
-    print('Fetching books from: $url');
+    //print('Fetching books from: $url');
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print('Response data: $data');
+      //print('Response data: $data');
       if (data['items'] != null) {
         final books = (data['items'] as List).map((item) {
           final book = Book.fromJson(item['volumeInfo']);
-          print('Book: ${book.title}, Thumbnail: ${book.thumbnail}');
+          //print('Book: ${book.title}, Thumbnail: ${book.thumbnail}');
           return book;
         }).toList();
         return books;
