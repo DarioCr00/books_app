@@ -1,12 +1,12 @@
-// ignore_for_file: avoid_print
-
 import 'package:books_app/utils/api_url.dart';
+import 'package:books_app/utils/work_manager_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:books_app/model/book.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'package:workmanager/workmanager.dart';
 
 class MainController extends GetxController {
   final RxBool _isDarkMode = false.obs;
@@ -20,16 +20,13 @@ class MainController extends GetxController {
 
   Future<List<Book>> fetchBooks(String query) async {
     final url = googleBooksApiUrl(query);
-    //print('Fetching books from: $url');
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      //print('Response data: $data');
       if (data['items'] != null) {
         final books = (data['items'] as List).map((item) {
           final book = Book.fromJson(item['volumeInfo']);
-          //print('Book: ${book.title}, Thumbnail: ${book.thumbnail}');
           return book;
         }).toList();
         return books;
@@ -53,6 +50,41 @@ class MainController extends GetxController {
 
   Future<List<Book>> fetchPopularBooks() async {
     return await fetchBooks("Lo Hobbit");
+  }
+
+  // Background tasks
+  Future<void> fetchBooksInBackground(String query) async {
+    await fetchBooks(query);
+  }
+
+  Future<void> fetchBookRecommendedInBackground() async {
+    await fetchBookRecommended();
+  }
+
+  Future<void> fetchPopularBooksInBackground() async {
+    await fetchPopularBooks();
+  }
+
+  void scheduleFetchBooks(String query) {
+    Workmanager().registerOneOffTask(
+      fetchBooksTask,
+      fetchBooksTask,
+      inputData: {'query': query},
+    );
+  }
+
+  void scheduleFetchBookRecommended() {
+    Workmanager().registerOneOffTask(
+      fetchBookRecommendedTask,
+      fetchBookRecommendedTask,
+    );
+  }
+
+  void scheduleFetchPopularBooks() {
+    Workmanager().registerOneOffTask(
+      fetchPopularBooksTask,
+      fetchPopularBooksTask,
+    );
   }
 
   void checkTheme() async {
