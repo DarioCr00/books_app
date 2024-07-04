@@ -52,20 +52,22 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: isDarkMode ? Colors.grey[800] : Colors.white,
               borderRadius: BorderRadius.circular(30.0),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 10,
-                  offset: const Offset(0,5),
-                )
+                  offset: const Offset(0, 5),
+                ),
               ],
             ),
             child: TextField(
@@ -82,8 +84,8 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
                   onPressed: _searchBooks,
                 ),
               ),
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: isDarkMode ? Colors.white : Colors.black,
               ),
             ),
           ),

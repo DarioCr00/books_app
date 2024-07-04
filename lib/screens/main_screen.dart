@@ -41,7 +41,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:PageView(
+      body: SafeArea(
+        child: PageView(
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {
@@ -55,14 +56,16 @@ class _MainScreenState extends State<MainScreen> {
             SettingsScreen(scrollController: _scrollController),
           ],
         ),
-        bottomNavigationBar: Hidable(
-          controller: _scrollController,
-          enableOpacityAnimation: true,
-          preferredWidgetSize: const Size.fromHeight(107),
-          child: Container(  
-          margin: const EdgeInsets.all(16.0),
+      ),
+
+      bottomNavigationBar: Hidable(
+        controller: _scrollController,
+        enableOpacityAnimation: true,
+        preferredWidgetSize: const Size.fromHeight(107),
+        child: Container(  
+          margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
             borderRadius: BorderRadius.circular(30.0),
             boxShadow: [
               BoxShadow(
@@ -107,6 +110,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
+      
     );
   }
 
