@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:books_app/utils/api_url.dart';
 import 'package:books_app/utils/work_manager_service.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class MainController extends GetxController {
     super.onInit();
   }
 
-  Future<List<Book>> fetchBooks(String query) async {
+  Future<List<Book>> fetchBooks(String query, {String? category}) async {
     final url = googleBooksApiUrl(query);
     final response = await http.get(Uri.parse(url));
 
@@ -50,6 +52,10 @@ class MainController extends GetxController {
 
   Future<List<Book>> fetchPopularBooks() async {
     return await fetchBooks("Lo Hobbit");
+  }
+
+  Future<List<Book>> searchBooksByCategory(String category) async {
+    return await fetchBooks("", category: category);
   }
 
   // Background tasks

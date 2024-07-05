@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:books_app/controller/main_controller.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final ScrollController scrollController;
+  
 
-  const SettingsScreen({Key? key, required this.scrollController}) : super(key: key);
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();

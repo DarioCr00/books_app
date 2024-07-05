@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 
 class FavouriteBooksScreen extends StatefulWidget {
-  final ScrollController scrollController;
 
-  const FavouriteBooksScreen({Key ? key, required this.scrollController}) : super(key: key);
+  const FavouriteBooksScreen({Key ? key}) : super(key: key);
 
   @override
   _FavouriteBooksScreenState createState() => _FavouriteBooksScreenState();

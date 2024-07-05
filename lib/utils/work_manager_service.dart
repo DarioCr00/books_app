@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:workmanager/workmanager.dart';
 import 'package:books_app/controller/main_controller.dart';
 import 'package:get/get.dart';

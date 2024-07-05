@@ -17,7 +17,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
-  final ScrollController _scrollController = ScrollController();
+  
 
   @override 
   void initState() {
@@ -32,12 +32,6 @@ class _MainScreenState extends State<MainScreen> {
     _pageController.jumpToPage(index);
   }
 
-  @override 
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,24 +43,19 @@ class _MainScreenState extends State<MainScreen> {
               _currentIndex = index;
             });
           },
-          children: [
-            HomeScreen(scrollController: _scrollController),
-            SearchScreen(scrollController: _scrollController),
-            FavouriteBooksScreen(scrollController: _scrollController),
-            SettingsScreen(scrollController: _scrollController),
+          children: const [
+            HomeScreen(),
+            SearchScreen(),
+            FavouriteBooksScreen(),
+            SettingsScreen(),
           ],
         ),
       ),
 
-      bottomNavigationBar: Hidable(
-        controller: _scrollController,
-        enableOpacityAnimation: true,
-        preferredWidgetSize: const Size.fromHeight(107),
-        child: Container(  
-          margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+      bottomNavigationBar: Container( 
+          //margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
           decoration: BoxDecoration(
             color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-            borderRadius: BorderRadius.circular(30.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -108,7 +97,6 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ],
           ),
-        ),
       ),
       
     );

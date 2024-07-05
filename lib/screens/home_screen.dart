@@ -8,9 +8,9 @@ import 'package:books_app/model/book.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
-  final ScrollController scrollController;
+  
 
-  const HomeScreen({Key? key, required this.scrollController}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -64,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
               : _errorMessage.isNotEmpty
                   ? Center(child: Text(_errorMessage, style: const TextStyle(color: Colors.red)))
                   : SingleChildScrollView(
-                      controller: widget.scrollController,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
