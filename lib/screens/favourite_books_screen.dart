@@ -2,6 +2,7 @@
 
 import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/model/book.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,10 +55,15 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: Image.network(
-                          book.thumbnail ?? 'https://via.placeholder.com/150',
+                        child: CachedNetworkImage(
+                          imageUrl: book.thumbnail ?? 'https://via.placeholder.com/150',
+                          placeholder: (context, url) => const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) {
+                            print('Error loading image:');
+                            return const Icon(Icons.error);
+                          },
                           fit: BoxFit.cover,
-                        ),
+                        )
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),

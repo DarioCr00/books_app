@@ -29,9 +29,9 @@ class BookListWidget extends StatelessWidget {
                 imageUrl: thumbnailUrl,
                 placeholder: (context, url) => const CircularProgressIndicator(),
                 errorWidget: (context, url, error) {
-                print('Error loading image: $thumbnailUrl');
-                return const Icon(Icons.error);
-              },
+                  print('Error loading image: $thumbnailUrl');
+                  return const Icon(Icons.error);
+                },
               )
               : const Icon(Icons.book),
             title: Text(book.title),

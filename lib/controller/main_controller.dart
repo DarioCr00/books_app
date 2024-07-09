@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_print
 
+import 'dart:isolate';
+
 import 'package:books_app/utils/api_url.dart';
-import 'package:books_app/utils/work_manager_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:books_app/model/book.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:workmanager/workmanager.dart';
 
 class MainController extends GetxController {
   final RxBool _isDarkMode = false.obs;
@@ -42,7 +42,7 @@ class MainController extends GetxController {
   }
 
   Future<Book> fetchBookRecommended() async {
-    final books = await fetchBooks("Il Signore degli Anelli Tolkien");
+    final books = await fetchBooksInBackground("Il Signore degli Anelli Tolkien");
     if (books.isNotEmpty) {
       return books.first;
     } else {
@@ -51,11 +51,11 @@ class MainController extends GetxController {
   }
 
   Future<List<Book>> fetchPopularBooks() async {
-    return await fetchBooks("Lo Hobbit");
+    return await fetchBooksInBackground("Lo Hobbit");
   }
 
   Future<List<Book>> searchBooksByCategory(String category) async {
-    return await fetchBooks("subject:$category");
+    return await fetchBooksInBackground("subject:$category");
   }
 
   Future<List<Book>> getFavouriteBooks() async {
@@ -64,40 +64,34 @@ class MainController extends GetxController {
     return favouriteBooks.map((bookJson) => Book.fromJson(json.decode(bookJson))).toList();
   }
 
-  // Background tasks
-  Future<void> fetchBooksInBackground(String query) async {
-    await fetchBooks(query);
+  Future<List<Book>> fetchBooksInBackground(String query) async {
+    ReceivePort receivePort = ReceivePort();
+    await Isolate.spawn(_fetchBooksIsolate, receivePort.sendPort);
+    SendPort sendPort = await receivePort.first;
+    return await _sendReceive(sendPort, query);
   }
 
-  Future<void> fetchBookRecommendedInBackground() async {
-    await fetchBookRecommended();
+  static void _fetchBooksIsolate(SendPort sendPort) async {
+    ReceivePort receivePort = ReceivePort();
+    sendPort.send(receivePort.sendPort);
+    await for (var msg in receivePort) {
+      String query = msg[0];
+      SendPort replyTo = msg[1];
+      try {
+        List<Book> books = await MainController().fetchBooks(query);
+        replyTo.send(books);
+      } catch (e) {
+        replyTo.send(e.toString());
+      }
+    }
   }
 
-  Future<void> fetchPopularBooksInBackground() async {
-    await fetchPopularBooks();
+  Future _sendReceive(SendPort sendPort, String query) {
+    ReceivePort receivePort = ReceivePort();
+    sendPort.send([query, receivePort.sendPort]);
+    return receivePort.first;
   }
 
-  void scheduleFetchBooks(String query) {
-    Workmanager().registerOneOffTask(
-      fetchBooksTask,
-      fetchBooksTask,
-      inputData: {'query': query},
-    );
-  }
-
-  void scheduleFetchBookRecommended() {
-    Workmanager().registerOneOffTask(
-      fetchBookRecommendedTask,
-      fetchBookRecommendedTask,
-    );
-  }
-
-  void scheduleFetchPopularBooks() {
-    Workmanager().registerOneOffTask(
-      fetchPopularBooksTask,
-      fetchPopularBooksTask,
-    );
-  }
 
   void checkTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

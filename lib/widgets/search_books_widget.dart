@@ -35,7 +35,7 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
       });
 
       try {
-        final books = await widget.mainController.fetchBooks(query);
+        final books = await widget.mainController.fetchBooksInBackground(query);
         setState(() {
           _books = books;
           _isLoading = false;
