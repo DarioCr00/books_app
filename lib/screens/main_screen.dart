@@ -5,7 +5,7 @@ import 'package:books_app/screens/home_screen.dart';
 import 'package:books_app/screens/search_screen.dart';
 import 'package:books_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hidable/hidable.dart';
+//import 'package:hidable/hidable.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key ? key}) : super(key: key);

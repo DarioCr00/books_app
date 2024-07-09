@@ -1,6 +1,8 @@
 // ignore_for_file: use_super_parameters
 
 import 'package:books_app/model/book.dart';
+import 'package:books_app/widgets/favourite_button_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class BookListWidget extends StatelessWidget {
@@ -20,12 +22,21 @@ class BookListWidget extends StatelessWidget {
         itemCount: books.length,
         itemBuilder: (context, index) {
           final book = books[index];
+          final thumbnailUrl = book.thumbnail;
           return ListTile(
-            leading: book.thumbnail != null
-                ? Image.network(book.thumbnail!)
-                : null,
+            leading: thumbnailUrl != null
+            ? CachedNetworkImage(
+                imageUrl: thumbnailUrl,
+                placeholder: (context, url) => const CircularProgressIndicator(),
+                errorWidget: (context, url, error) {
+                print('Error loading image: $thumbnailUrl');
+                return const Icon(Icons.error);
+              },
+              )
+              : const Icon(Icons.book),
             title: Text(book.title),
             subtitle: Text(book.subtitle ?? ''),
+            trailing: FavouriteButtonWidget(book: book),
           );
         },
       ),

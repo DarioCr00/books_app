@@ -55,7 +55,7 @@ class MainController extends GetxController {
   }
 
   Future<List<Book>> searchBooksByCategory(String category) async {
-    return await fetchBooks("", category: category);
+    return await fetchBooks("subject:$category");
   }
 
   // Background tasks
