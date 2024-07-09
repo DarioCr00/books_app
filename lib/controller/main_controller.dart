@@ -58,6 +58,12 @@ class MainController extends GetxController {
     return await fetchBooks("", category: category);
   }
 
+  Future<List<Book>> getFavouriteBooks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? favouriteBooks = prefs.getStringList('favouriteBooks') ?? [];
+    return favouriteBooks.map((bookJson) => Book.fromJson(json.decode(bookJson))).toList();
+  }
+
   // Background tasks
   Future<void> fetchBooksInBackground(String query) async {
     await fetchBooks(query);

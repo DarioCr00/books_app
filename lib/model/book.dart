@@ -1,19 +1,34 @@
 class Book {
   final String title;
   final String? subtitle;
+  final List<String> authors;
   final String? description;
-  //final double popular;
+  final double? averageRating;
   final String? thumbnail;
 
-  Book({required this.title, this.subtitle, this.description, /*required this.popular,*/ this.thumbnail});
+  Book({required this.title, this.subtitle, required this.authors, this.description, this.averageRating, this.thumbnail});
 
   factory Book.fromJson(Map<String, dynamic> json) {
     return Book(
       title: json['title'],
       subtitle: json['subtitle'],
+      authors: (json['authors'] as List<dynamic>?)?.map((author) => author as String).toList() ?? [],
       description: json['description'],
-      //popular: json['averageRating'],
+      averageRating: json['averageRating']?.toDouble(),
       thumbnail: json['imageLinks'] != null ? json['imageLinks']['thumbnail'] : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'subititle': subtitle,
+      'authors': authors,
+      'description': description,
+      'averageRating': averageRating,
+      'imageLinks': {
+        'thumbnail': thumbnail,
+      }
+    };
   }
 }

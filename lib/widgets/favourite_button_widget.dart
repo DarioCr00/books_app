@@ -1,7 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, use_super_parameters, avoid_print
 
+import 'dart:convert';
+
 import 'package:books_app/model/book.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FavouriteButtonWidget extends StatefulWidget {
   final Book book;
@@ -15,8 +18,30 @@ class FavouriteButtonWidget extends StatefulWidget {
 class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
   bool _isFavourite = false;
 
-  void _toggleFavourite() {
+  @override 
+  void initState() {
+    super.initState();
+    _loadFavouriteStatus();
+  }
+
+  void _loadFavouriteStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? favouriteBooks = prefs.getStringList('favouriteBooks') ?? [];
     setState(() {
+      _isFavourite = favouriteBooks.contains(json.encode(widget.book.toJson()));
+    });
+  }
+
+  void _toggleFavourite() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? favouriteBooks = prefs.getStringList('favouriteBooks') ?? [];
+    setState(() {
+      if(_isFavourite) {
+        favouriteBooks.remove(json.encode(widget.book.toJson()));
+      } else {
+        favouriteBooks.add(json.encode(widget.book.toJson()));
+      }
+      prefs.setStringList('favouriteBooks', favouriteBooks);
       _isFavourite = !_isFavourite;
     });
     // Stampa il titolo del libro
@@ -25,7 +50,6 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
     } else {
       print("Rimosso ${widget.book.title} dai preferiti");
     }
-    
   }
 
   @override
