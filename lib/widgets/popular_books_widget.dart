@@ -1,5 +1,6 @@
 // ignore_for_file: use_super_parameters
 
+import 'package:books_app/pages/book_page.dart';
 import 'package:books_app/widgets/favourite_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -24,40 +25,50 @@ class PopularBooksWidget extends StatelessWidget {
       itemCount: books.length,
       itemBuilder: (context, index) {
         final book = books[index];
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CachedNetworkImage(
-              imageUrl: book.thumbnail!,
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 5),
-            Text(
-              book.title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (context) => BookPage(book: book),
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 5),
-            Text(
-              book.subtitle ?? '',
-              style: const TextStyle(
-                fontSize: 12,
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CachedNetworkImage(
+                imageUrl: book.thumbnail!,
+                placeholder: (context, url) => const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                height: 150,
+                fit: BoxFit.cover,
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 10),
-            FavouriteButtonWidget(book: book),
-          ],
+              const SizedBox(height: 5),
+              Text(
+                book.title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 5),
+              Text(
+                book.subtitle ?? '',
+                style: const TextStyle(
+                  fontSize: 12,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 10),
+              FavouriteButtonWidget(book: book),
+            ],
+          ),
         );
-      },
+      }, 
     );
   }
 }

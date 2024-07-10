@@ -1,4 +1,4 @@
-// ignore_for_file: use_super_parameters, library_private_types_in_public_api
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, avoid_print
 
 import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/model/book.dart';
