@@ -12,6 +12,10 @@ class BookPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String description = book.description ?? 'No description available';
+    String ratings = book.averageRating != null ? book.averageRating.toString() : 'No ratings available';
+
     return Scaffold(
       backgroundColor: Colors.brown[300],
       appBar: AppBar(
@@ -55,31 +59,37 @@ class BookPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                if (book.averageRating != null)
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow[700],
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        book.averageRating!.toString(),
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        '(${book.averageRating!.toStringAsFixed(1)})',
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
+                  child:  Container(
+                    width: double.infinity,
+                    height: 100,
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Ratings',
+                          style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          ratings,
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 16),
-                if (book.description != null)
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -99,7 +109,7 @@ class BookPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          book.description!,
+                          description,
                           style: const TextStyle(
                             fontSize: 16,
                           ),

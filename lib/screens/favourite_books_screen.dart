@@ -2,6 +2,7 @@
 
 import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/model/book.dart';
+import 'package:books_app/pages/book_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,36 +51,46 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
               itemCount: books.length,
               itemBuilder: (context, index) {
                 final book = books[index];
-                return Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: CachedNetworkImage(
-                          imageUrl: book.thumbnail ?? 'https://via.placeholder.com/150',
-                          placeholder: (context, url) => const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) {
-                            print('Error loading image:');
-                            return const Icon(Icons.error);
-                          },
-                          fit: BoxFit.cover,
-                        )
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookPage(book: book),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          book.title,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    );
+                  },
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: CachedNetworkImage(
+                            imageUrl: book.thumbnail ?? 'https://via.placeholder.com/150',
+                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) {
+                              print('Error loading image:');
+                              return const Icon(Icons.error);
+                            },
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(book.authors.join(', ')),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            book.title,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(book.authors.join(', ')),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
