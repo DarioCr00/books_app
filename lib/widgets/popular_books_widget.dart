@@ -67,7 +67,11 @@ class PopularBooksWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 10),
-              FavouriteButtonWidget(book: book),
+              FavouriteButtonWidget(
+                book: book,
+                onFavouriteChanged: (isFavourite) {
+                      },
+              ),
             ],
           ),
         );

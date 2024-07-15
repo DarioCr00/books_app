@@ -48,7 +48,11 @@ class BookListWidget extends StatelessWidget {
                 : const Icon(Icons.book),
               title: Text(book.title), 
               subtitle: Text(book.subtitle ?? ''),
-              trailing: FavouriteButtonWidget(book: book),
+              trailing: FavouriteButtonWidget(
+                book: book,
+                onFavouriteChanged: (isFavourite) {
+                      },
+              ),
             ),
           );
         },

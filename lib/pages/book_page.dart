@@ -55,7 +55,12 @@ class BookPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    FavouriteButtonWidget(book: book),
+                    FavouriteButtonWidget(
+                      book: book,
+                      onFavouriteChanged: (isFavourite) {
+                        Navigator.pop(context, true);
+                      },
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),

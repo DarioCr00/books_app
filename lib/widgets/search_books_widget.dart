@@ -115,7 +115,11 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
                       : const Icon(Icons.book),
                     title: Text(book.title),
                     subtitle: Text(book.subtitle ?? ''),
-                    trailing: FavouriteButtonWidget(book: book),
+                    trailing: FavouriteButtonWidget(
+                      book: book,
+                      onFavouriteChanged: (isFavourite) {
+                      },
+                    ),
                     onTap: () {
                       Navigator.push(
                         context, 

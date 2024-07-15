@@ -24,6 +24,12 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
     super.initState();
     _favouriteBooks = _mainController.getFavouriteBooks();
   }
+
+  Future<void> _refreshFavourites() async {
+    setState(() {
+      _favouriteBooks = _mainController.getFavouriteBooks();
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -52,13 +58,16 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
               itemBuilder: (context, index) {
                 final book = books[index];
                 return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    var result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => BookPage(book: book),
                       ),
                     );
+                    if(result == true) {
+                      _refreshFavourites();
+                    }
                   },
                   child: Card(
                     child: Column(

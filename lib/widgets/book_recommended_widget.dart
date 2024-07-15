@@ -85,7 +85,11 @@ class BookRecommendedWidget extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      FavouriteButtonWidget(book: book),
+                      FavouriteButtonWidget(
+                        book: book,
+                        onFavouriteChanged: (isFavourite) {
+                        },
+                      ),
                     ],
                   ),
                 ),

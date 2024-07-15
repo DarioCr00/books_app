@@ -8,8 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FavouriteButtonWidget extends StatefulWidget {
   final Book book;
+  final Function(bool) onFavouriteChanged;
 
-  const FavouriteButtonWidget({Key? key, required this.book}) : super(key: key);
+  const FavouriteButtonWidget({Key? key, required this.book, required this.onFavouriteChanged}) : super(key: key);
 
   @override
   _FavouriteButtonWidgetState createState() => _FavouriteButtonWidgetState();
@@ -17,6 +18,7 @@ class FavouriteButtonWidget extends StatefulWidget {
 
 class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
   bool _isFavourite = false;
+  bool _isLoading = true;
 
   @override 
   void initState() {
@@ -30,6 +32,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
     List<String>? favouriteBooks = prefs.getStringList('favouriteBooks') ?? [];
     setState(() {
       _isFavourite = favouriteBooks.contains(json.encode(widget.book.toJson()));
+      _isLoading = false;
     });
   }
 
@@ -45,6 +48,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
       }
       prefs.setStringList('favouriteBooks', favouriteBooks);
       _isFavourite = !_isFavourite;
+      widget.onFavouriteChanged(_isFavourite);
     });
     // Stampa il titolo del libro
     if(_isFavourite) {
@@ -56,7 +60,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return _isLoading ? const Center(child: CircularProgressIndicator(),) : ElevatedButton(
       onPressed: _toggleFavourite, //when pressed updates the favourite status
       child: Row(
         mainAxisSize: MainAxisSize.min,
