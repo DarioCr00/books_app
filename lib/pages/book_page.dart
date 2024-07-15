@@ -25,7 +25,7 @@ class BookPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start, //alligning childre to start of the content
               children: [
                 if (book.thumbnail != null)
                   Center(
@@ -48,7 +48,7 @@ class BookPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        book.authors.join(', '),
+                        book.authors.join(', '), //joining author's name with commas
                         style: const TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -60,12 +60,12 @@ class BookPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Card(
-                  elevation: 4,
+                  elevation: 4, //elevation for shadow effect
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child:  Container(
-                    width: double.infinity,
+                    width: double.infinity, //full width of the parent
                     height: 100,
                     padding: const EdgeInsets.all(16.0),
                     child: Column(

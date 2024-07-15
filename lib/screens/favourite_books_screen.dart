@@ -33,7 +33,7 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
         centerTitle: true,
       ),
       body:  FutureBuilder<List<Book>>(
-        future: _favouriteBooks,
+        future: _favouriteBooks, //the future to be resolved
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -72,7 +72,7 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
                               print('Error loading image:');
                               return const Icon(Icons.error);
                             },
-                            fit: BoxFit.cover,
+                            fit: BoxFit.cover, //cover the available space with the image
                           ),
                         ),
                         Padding(

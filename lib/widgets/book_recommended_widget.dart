@@ -15,11 +15,13 @@ class BookRecommendedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    //if the book description is longer than 200 characters then truncate
     String truncatedDescription = (book.description != null && book.description!.length > 200)
         ? '${book.description!.substring(0, 200)}...'
         : book.description ?? '';
 
     return GestureDetector(
+      //navigate to the bookPage when the container is tapped
       onTap: () {
         Navigator.push(
           context, 
