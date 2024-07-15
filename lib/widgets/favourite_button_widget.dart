@@ -21,6 +21,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
   @override 
   void initState() {
     super.initState();
+    //load the initial favourite status from shared pref
     _loadFavouriteStatus();
   }
 
@@ -32,6 +33,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
     });
   }
 
+  //toggle the favourite status and update shared pref
   void _toggleFavourite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? favouriteBooks = prefs.getStringList('favouriteBooks') ?? [];
@@ -55,7 +57,7 @@ class _FavouriteButtonWidgetState extends State<FavouriteButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: _toggleFavourite,
+      onPressed: _toggleFavourite, //when pressed updates the favourite status
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

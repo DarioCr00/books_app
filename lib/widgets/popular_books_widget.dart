@@ -14,15 +14,18 @@ class PopularBooksWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      //grid is not scrollable and its size its determined by the content
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
+      //defining the layout
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.6,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
+        childAspectRatio: 0.6, 
+        mainAxisSpacing: 10, //spacing between rows
+        crossAxisSpacing: 10, //spacing between col
       ),
       itemCount: books.length,
+      //build each grid item
       itemBuilder: (context, index) {
         final book = books[index];
         return GestureDetector(
@@ -41,8 +44,8 @@ class PopularBooksWidget extends StatelessWidget {
                 imageUrl: book.thumbnail!,
                 placeholder: (context, url) => const CircularProgressIndicator(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
-                height: 150,
-                fit: BoxFit.cover,
+                height: 150, //set the height for the image
+                fit: BoxFit.cover, //cover the entire area
               ),
               const SizedBox(height: 5),
               Text(
@@ -52,7 +55,7 @@ class PopularBooksWidget extends StatelessWidget {
                   fontSize: 14,
                 ),
                 maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.ellipsis, //truncate the title if it overflows
               ),
               const SizedBox(height: 5),
               Text(

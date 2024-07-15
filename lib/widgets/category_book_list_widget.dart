@@ -19,6 +19,7 @@ class BookListWidget extends StatelessWidget {
         title: Text(categoryName),
         centerTitle: true,
       ),
+      //listview to display the list of books
       body: ListView.builder(
         itemCount: books.length,
         itemBuilder: (context, index) {
@@ -33,6 +34,7 @@ class BookListWidget extends StatelessWidget {
                 ),
               );
             },
+            //listTile to display the book's information
             child: ListTile(
               leading: thumbnailUrl != null
                 ? CachedNetworkImage(
@@ -44,7 +46,7 @@ class BookListWidget extends StatelessWidget {
                     },
                   )
                 : const Icon(Icons.book),
-              title: Text(book.title),
+              title: Text(book.title), 
               subtitle: Text(book.subtitle ?? ''),
               trailing: FavouriteButtonWidget(book: book),
             ),

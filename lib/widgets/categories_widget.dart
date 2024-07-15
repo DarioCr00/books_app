@@ -8,27 +8,30 @@ import 'package:flutter/material.dart';
 class CategoriesWidget extends StatelessWidget {
   final MainController mainController;
 
+  //constructor that intialize the main Controller
   CategoriesWidget({required this.mainController});
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
+      // Gridview to display the list of categories as a grid
       child: GridView.builder(
         padding: const EdgeInsets.all(10),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 1,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisCount: 3, //numb of columns
+          childAspectRatio: 1, //aspect ration of the grid items
+          crossAxisSpacing: 10, // horizontal spacing between them
+          mainAxisSpacing: 10, //vertical spacing between them
         ),
-        itemCount: categories.length,
+        itemCount: categories.length, //number of categories
         itemBuilder: (context, index) {
-          final category = categories[index];
+          final category = categories[index]; //get the categories
           final color = categoryColorMap[category.name] ?? Colors.grey;
           return CategoryItem(
             category: category,
             color: color,
             onTap: () async {
+              //fetch books for the selected category and navigate to the bookListWidget
               final books = await mainController.searchBooksByCategory(category.name);
               Navigator.push(
                 context, 
@@ -44,6 +47,7 @@ class CategoriesWidget extends StatelessWidget {
   }
 }
 
+//widget for individual category
 class CategoryItem extends StatelessWidget {
   final Category category;
   final Color color;
@@ -54,7 +58,7 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap, //triggered when the category is tapped
       child:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

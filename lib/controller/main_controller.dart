@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:isolate';
+import 'dart:math';
 
 import 'package:books_app/utils/api_url.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,13 @@ class MainController extends GetxController {
   }
 
   Future<List<Book>> fetchPopularBooks() async {
-    return await fetchBooksInBackground("Lo Hobbit");
+    List<Book> books = await fetchBooksInBackground("fantasy");
+
+    //Selecting a random set of books
+    books.shuffle(Random());
+
+    //Returning the first 10 books or less
+    return books.take(10).toList();
   }
 
   Future<List<Book>> searchBooksByCategory(String category) async {

@@ -123,7 +123,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     leading: const Icon(Icons.info, color: Colors.blue),
                     title: const Text('About Us'),
                     onTap: () {
-                      // Add functionality to show about us information
+                      // Future Implementation
                     },
                   ),
                   const Divider(indent: 16.0, endIndent: 16.0),
