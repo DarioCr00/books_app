@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Category {
+class Category { //model to define the category icons
   final String name;
   final IconData icon;
   final int bookCount;
@@ -8,7 +8,8 @@ class Category {
   Category({required this.name, required this.icon, required this.bookCount});
 }
 
-final List<Category> categories = [
+final List<Category> categories = [ //bookCounts are fixed numbers used to have a less empty interface
+
   Category(name: 'Action & Adventure', icon: Icons.local_fire_department, bookCount: 155),
   Category(name: 'Art', icon: Icons.brush, bookCount: 60),
   Category(name: 'Biography & Autobiography', icon: Icons.person, bookCount: 70),

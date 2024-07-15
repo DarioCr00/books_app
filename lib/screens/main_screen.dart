@@ -6,6 +6,7 @@ import 'package:books_app/screens/search_screen.dart';
 import 'package:books_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
+//Navigation bar positioned on the bottom of most screens
 class MainScreen extends StatefulWidget {
   const MainScreen({Key ? key}) : super(key: key);
 
@@ -24,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     _pageController = PageController();
   }
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) { //tapping on an item takes you to the corresponding page
     setState(() {
       _currentIndex = index;
     });
@@ -52,7 +53,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
 
       bottomNavigationBar: Container( 
-          //margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
           decoration: BoxDecoration(
             color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
             boxShadow: [
@@ -74,22 +74,22 @@ class _MainScreenState extends State<MainScreen> {
             showSelectedLabels: false,
             showUnselectedLabels: false,
             items: [
-              _buildBottomNavBarItem(
+              _buildBottomNavBarItem( //Home Icon
                 index: 0,
                 icon: Icons.home,
                 selectedColor: Colors.brown,
               ),
-              _buildBottomNavBarItem(
+              _buildBottomNavBarItem( //Search Icon
                 index: 1,
                 icon: Icons.search,
                 selectedColor: Colors.green,
               ),
-              _buildBottomNavBarItem(
+              _buildBottomNavBarItem( //Favourite Icon
                 index: 2,
                 icon: Icons.star,
                 selectedColor: Colors.yellow,
               ),
-              _buildBottomNavBarItem(
+              _buildBottomNavBarItem( //Settings Icon
                 index: 3,
                 icon: Icons.settings,
                 selectedColor: Colors.blue,

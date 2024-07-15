@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:books_app/model/book.dart';
 
 
+//widget containing further informations about a specific book
 class BookPage extends StatelessWidget {
   final Book book;
 
@@ -25,7 +26,7 @@ class BookPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, //alligning childre to start of the content
+              crossAxisAlignment: CrossAxisAlignment.start, //aligning children to start of the content
               children: [
                 if (book.thumbnail != null)
                   Center(

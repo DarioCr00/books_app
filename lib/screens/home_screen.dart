@@ -7,6 +7,7 @@ import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/model/book.dart';
 import 'package:get/get.dart';
 
+//Home screen containing recommended and popular books
 class HomeScreen extends StatefulWidget {
   
 
@@ -83,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
         ),
-        //backgroundColor: _mainController.isDarkMode.value ? Colors.black : Colors.white,
       );
   }
 }

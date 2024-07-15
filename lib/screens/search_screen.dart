@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/widgets/search_books_widget.dart';
 
+//Screen used to search books by title or by category
 class SearchScreen extends StatefulWidget {
 
   const SearchScreen({Key ? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
   
+  //Depending on the mode selected the screen will feature the category icons/category results or a search bar/search results
   @override
   Widget build(BuildContext context) {
     return Scaffold(
