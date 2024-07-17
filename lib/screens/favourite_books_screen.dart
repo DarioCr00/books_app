@@ -7,6 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
+//Page displaying all books saved as Favourites
 class FavouriteBooksScreen extends StatefulWidget {
   const FavouriteBooksScreen({Key? key}) : super(key: key);
 
@@ -57,7 +59,7 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
               itemBuilder: (context, index) {
                 final book = books[index];
                 return GestureDetector(
-                  onTap: () async {
+                  onTap: () async { //clicking on a book opens its details page (pages/book_page.dart)
                     var result = await Navigator.push(
                       context,
                       MaterialPageRoute(

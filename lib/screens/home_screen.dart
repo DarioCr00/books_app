@@ -7,6 +7,7 @@ import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/model/book.dart';
 import 'package:get/get.dart';
 
+//Home screen containing recommended and popular books
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -55,45 +56,43 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: _isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : _errorMessage.isNotEmpty
-                ? Center(
-                    child: Text(_errorMessage,
-                        style: const TextStyle(color: Colors.red)))
-                : SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (_bookRecommended != null)
-                          BookRecommendedWidget(
-                            book: _bookRecommended!,
+        appBar: AppBar(
+          title: const Text('Home'),
+          centerTitle: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _errorMessage.isNotEmpty
+                  ? Center(
+                      child: Text(_errorMessage,
+                          style: const TextStyle(color: Colors.red)))
+                  : SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (_bookRecommended != null)
+                            BookRecommendedWidget(
+                              book: _bookRecommended!,
+                              onUpdateFavourite: _updateFavourites,
+                            ),
+                          const SizedBox(height: 20),
+                          const Text(
+                            'Most popular',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          PopularBooksWidget(
+                            books: _popularBooks,
                             onUpdateFavourite: _updateFavourites,
                           ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Most popular',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        PopularBooksWidget(
-                          books: _popularBooks,
-                          onUpdateFavourite: _updateFavourites,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-      ),
-      //backgroundColor: _mainController.isDarkMode.value ? Colors.black : Colors.white,
-    );
+        ));
   }
 }

@@ -1,4 +1,4 @@
-class Book {
+class Book { //model used to structure data obtained from the API
   final String title;
   final String? subtitle;
   final List<String> authors;

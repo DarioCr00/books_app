@@ -2,6 +2,7 @@
 
 import 'package:books_app/api/api_key.dart';
 
+//String object that chains the query to the API url, fields and Key
 String googleBooksApiUrl(String query) {
   final String baseUrl = "https://www.googleapis.com/books/v1/volumes";
   final String fields = "items(volumeInfo(title,subtitle,authors,publisher,publishedDate,description,pageCount,categories,imageLinks,language))";

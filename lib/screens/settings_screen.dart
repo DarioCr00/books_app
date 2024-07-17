@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:books_app/controller/main_controller.dart';
 
+
+//Screen that allows to change some setting options
 class SettingsScreen extends StatefulWidget {
   
 
@@ -44,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                   ),
-                  ListTile(
+                  ListTile( //main feature of the page, allows to switch to dark/light mode
                     leading: const Icon(Icons.brightness_6, color: Colors.blue),
                     title: const Text('Dark Mode'),
                     trailing: Switch(
@@ -57,6 +59,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       inactiveTrackColor: Colors.white,
                     ),
                   ),
+
+                  //the remaining features are not fully implemented, they serve as filler to have a less empty page
                   const Divider(indent: 16.0, endIndent: 16.0),
                   ListTile(
                     leading: const Icon(Icons.language, color: Colors.blue),
