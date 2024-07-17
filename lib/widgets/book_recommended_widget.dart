@@ -2,39 +2,44 @@
 
 import 'package:books_app/pages/book_page.dart';
 import 'package:books_app/widgets/favourite_button_widget.dart';
- //import 'package:books_finder/books_finder.dart';
+//import 'package:books_finder/books_finder.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:books_app/model/book.dart';
 
 class BookRecommendedWidget extends StatelessWidget {
   final Book book;
+  final Function onUpdateFavourite;
 
-  const BookRecommendedWidget({Key? key, required this.book}) : super(key: key);
+  const BookRecommendedWidget(
+      {Key? key, required this.book, required this.onUpdateFavourite})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     //if the book description is longer than 200 characters then truncate
-    String truncatedDescription = (book.description != null && book.description!.length > 200)
-        ? '${book.description!.substring(0, 200)}...'
-        : book.description ?? '';
+    String truncatedDescription =
+        (book.description != null && book.description!.length > 200)
+            ? '${book.description!.substring(0, 200)}...'
+            : book.description ?? '';
 
     return GestureDetector(
       //navigate to the bookPage when the container is tapped
-      onTap: () {
-        Navigator.push(
-          context, 
+      onTap: () async {
+        bool? updated = await Navigator.push(
+          context,
           MaterialPageRoute(
             builder: (context) => BookPage(book: book),
           ),
         );
+
+        if (updated == true) {
+          onUpdateFavourite(); //notificate the screen about updates
+        }
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.brown,
-          borderRadius: BorderRadius.circular(12.0)
-        ),      
+            color: Colors.brown, borderRadius: BorderRadius.circular(12.0)),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,17 +47,17 @@ class BookRecommendedWidget extends StatelessWidget {
             const Text(
               'BOOK RECOMMENDED',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Colors.white
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.white),
             ),
             const SizedBox(height: 10),
             Row(
               children: [
                 CachedNetworkImage(
                   imageUrl: book.thumbnail!,
-                  placeholder: (context, url) => const CircularProgressIndicator(),
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
                 const SizedBox(width: 10),
@@ -87,8 +92,7 @@ class BookRecommendedWidget extends StatelessWidget {
                       const SizedBox(height: 10),
                       FavouriteButtonWidget(
                         book: book,
-                        onFavouriteChanged: (isFavourite) {
-                        },
+                        onFavouriteChanged: (isFavourite) {},
                       ),
                     ],
                   ),

@@ -79,7 +79,8 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
                   color: Colors.grey[400],
                 ),
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 15.0, horizontal: 20.0),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.search),
                   onPressed: _searchBooks,
@@ -102,32 +103,54 @@ class _SearchBooksWidgetState extends State<SearchBooksWidget> {
                 itemBuilder: (context, index) {
                   final book = _books[index];
                   final thumbnailUrl = book.thumbnail;
-                  return ListTile(
-                    leading: thumbnailUrl != null
-                      ? CachedNetworkImage(
-                        imageUrl: thumbnailUrl,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) {
-                          print('Error loading image: $thumbnailUrl');
-                          return const Icon(Icons.error);
-                        },
-                      )
-                      : const Icon(Icons.book),
-                    title: Text(book.title),
-                    subtitle: Text(book.subtitle ?? ''),
-                    trailing: FavouriteButtonWidget(
-                      book: book,
-                      onFavouriteChanged: (isFavourite) {
-                      },
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context, 
+                  return GestureDetector(
+                    onTap: () async {
+                      bool? updated = await Navigator.push(
+                        context,
                         MaterialPageRoute(
                           builder: (context) => BookPage(book: book),
                         ),
                       );
+                      if (updated == true) {
+                        _searchBooks();
+                      }
                     },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 15,
+                            child: thumbnailUrl != null
+                                ? CachedNetworkImage(
+                                    imageUrl: thumbnailUrl,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) {
+                                      print(
+                                          'Error loading image: $thumbnailUrl');
+                                      return const Icon(Icons.error);
+                                    },
+                                  )
+                                : const Icon(Icons.book),
+                          ),
+                          Expanded(
+                              flex: 45,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(book.title),
+                              )),
+                          Expanded(
+                            flex: 15,
+                            child: FavouriteButtonWidget(
+                              book: book,
+                              onFavouriteChanged: (isFavourite) {},
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 },
               ),

@@ -28,19 +28,17 @@ class CategoriesWidget extends StatelessWidget {
           final category = categories[index]; //get the categories
           final color = categoryColorMap[category.name] ?? Colors.grey;
           return CategoryItem(
-            category: category,
-            color: color,
-            onTap: () async {
-              //fetch books for the selected category and navigate to the bookListWidget
-              final books = await mainController.searchBooksByCategory(category.name);
-              Navigator.push(
-                context, 
-                MaterialPageRoute(
-                  builder: (context) => BookListWidget(books: books, categoryName: category.name)
-                ),
-              );
-            }
-          );
+              category: category,
+              color: color,
+              onTap: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BookListWidget(
+                          mainController: mainController,
+                          categoryName: category.name)),
+                );
+              });
         },
       ),
     );
@@ -53,13 +51,18 @@ class CategoryItem extends StatelessWidget {
   final Color color;
   final VoidCallback onTap;
 
-  const CategoryItem({Key? key, required this.category, required this.color, required this.onTap}) : super(key: key);
+  const CategoryItem(
+      {Key? key,
+      required this.category,
+      required this.color,
+      required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap, //triggered when the category is tapped
-      child:  Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(

@@ -22,7 +22,7 @@ class Book {
   Map<String, dynamic> toJson() {
     return {
       'title': title,
-      'subititle': subtitle,
+      'subtitle': subtitle,
       'authors': authors,
       'description': description,
       'averageRating': averageRating,

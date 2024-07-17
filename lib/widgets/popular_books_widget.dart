@@ -8,8 +8,11 @@ import 'package:books_app/model/book.dart';
 
 class PopularBooksWidget extends StatelessWidget {
   final List<Book> books;
+  final Function onUpdateFavourite;
 
-  const PopularBooksWidget({Key? key, required this.books}) : super(key: key);
+  const PopularBooksWidget(
+      {Key? key, required this.books, required this.onUpdateFavourite})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class PopularBooksWidget extends StatelessWidget {
       //defining the layout
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.6, 
+        childAspectRatio: 0.6,
         mainAxisSpacing: 10, //spacing between rows
         crossAxisSpacing: 10, //spacing between col
       ),
@@ -29,20 +32,25 @@ class PopularBooksWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         final book = books[index];
         return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context, 
+          onTap: () async {
+            bool? updated = await Navigator.push(
+              context,
               MaterialPageRoute(
                 builder: (context) => BookPage(book: book),
               ),
             );
+
+            if (updated == true) {
+              onUpdateFavourite(); //notificate the homescreen about updates
+            }
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CachedNetworkImage(
                 imageUrl: book.thumbnail!,
-                placeholder: (context, url) => const CircularProgressIndicator(),
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 height: 150, //set the height for the image
                 fit: BoxFit.cover, //cover the entire area
@@ -55,7 +63,8 @@ class PopularBooksWidget extends StatelessWidget {
                   fontSize: 14,
                 ),
                 maxLines: 2,
-                overflow: TextOverflow.ellipsis, //truncate the title if it overflows
+                overflow:
+                    TextOverflow.ellipsis, //truncate the title if it overflows
               ),
               const SizedBox(height: 5),
               Text(
@@ -69,13 +78,12 @@ class PopularBooksWidget extends StatelessWidget {
               const SizedBox(height: 10),
               FavouriteButtonWidget(
                 book: book,
-                onFavouriteChanged: (isFavourite) {
-                      },
+                onFavouriteChanged: (isFavourite) {},
               ),
             ],
           ),
         );
-      }, 
+      },
     );
   }
 }

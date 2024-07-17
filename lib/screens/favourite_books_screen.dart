@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FavouriteBooksScreen extends StatefulWidget {
-
-  const FavouriteBooksScreen({Key ? key}) : super(key: key);
+  const FavouriteBooksScreen({Key? key}) : super(key: key);
 
   @override
   _FavouriteBooksScreenState createState() => _FavouriteBooksScreenState();
@@ -30,7 +29,7 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
       _favouriteBooks = _mainController.getFavouriteBooks();
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +37,7 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
         title: const Text('Favourite Books'),
         centerTitle: true,
       ),
-      body:  FutureBuilder<List<Book>>(
+      body: FutureBuilder<List<Book>>(
         future: _favouriteBooks, //the future to be resolved
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -65,40 +64,47 @@ class _FavouriteBooksScreenState extends State<FavouriteBooksScreen> {
                         builder: (context) => BookPage(book: book),
                       ),
                     );
-                    if(result == true) {
+                    if (result == true) {
                       _refreshFavourites();
                     }
                   },
                   child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: CachedNetworkImage(
-                            imageUrl: book.thumbnail ?? 'https://via.placeholder.com/150',
-                            placeholder: (context, url) => const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) {
-                              print('Error loading image:');
-                              return const Icon(Icons.error);
-                            },
-                            fit: BoxFit.cover, //cover the available space with the image
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            book.title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: CachedNetworkImage(
+                              imageUrl: book.thumbnail ??
+                                  'https://via.placeholder.com/150',
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) {
+                                print('Error loading image:');
+                                return const Icon(Icons.error);
+                              },
+                              fit: BoxFit
+                                  .cover, //cover the available space with the image
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(book.authors.join(', ')),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              book.title,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(book.authors.join(', ')),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

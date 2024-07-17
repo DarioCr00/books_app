@@ -23,6 +23,7 @@ class MainController extends GetxController {
 
   Future<List<Book>> fetchBooks(String query, {String? category}) async {
     final url = googleBooksApiUrl(query);
+    print(url);
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {

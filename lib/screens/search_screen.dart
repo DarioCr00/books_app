@@ -6,8 +6,7 @@ import 'package:books_app/controller/main_controller.dart';
 import 'package:books_app/widgets/search_books_widget.dart';
 
 class SearchScreen extends StatefulWidget {
-
-  const SearchScreen({Key ? key}) : super(key: key);
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -22,7 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
       _isSearchActive = !_isSearchActive;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

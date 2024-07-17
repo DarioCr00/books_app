@@ -18,23 +18,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Books App',
-        themeMode: mainController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
-        
+        themeMode:
+            mainController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
         darkTheme: ThemeData(
           brightness: Brightness.dark,
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Color.fromRGBO(44, 44, 44, 1),
           ),
         ),
-        
         theme: ThemeData(
           brightness: Brightness.light,
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.white,
           ),
         ),
-        
         home: const MainScreen(),
       );
     });
