@@ -63,10 +63,9 @@ L'utilizzo di SharedPreferences è stato prediletto, in quanto più semplice e m
 ORM permetterebbe una maggiore persistenza dei dati delle API tramite PrismaEngine (PrismaJS/TS Client).
 
 ## Commenti Finali
-Le API utilizzate sfruttano un'unica chiave salvata nelle **local.properties** come **MAPS_API_KEY**.\
+
+Abbiamo utilizzato una sola API (GoogleBooks), in quanto altre API sarebbero state, a nostro avviso, ridondanti o poco pertinenti.\
 \
-L'utilizzo dell'IDE **Android Studio** è stato, a tratti, ostico a causa di errori di compilazione o build
-che si risolvevano semplicemente rebuildando il codice o restartando l'IDE.\
+Ci siamo avvalsi dell'utilizzo dei Flutter Isolate come alternativa, per la gestione del MultiThreading (Foreground e Background Thread), a WorkManager, in quanto più più semplice e meno time consuming.\
 \
-Esiste sicuramente un ampio margine di miglioramento, sia dal punto di vista del design che del codice,
-ma come prima applicazione Android Kotlin speriamo risulti apprezzabile.
+Abbiamo utilizzato Flutter perché che sta riscuotendo maggiore successo nelle implementazioni odierne, in più con un singolo sviluppo il codice può essere buildato e testato su più piattaforme.
