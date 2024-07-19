@@ -6,7 +6,7 @@ L'applicazione **BooksApp** permette all'utente di cercare libri e salvarli come
 
 ### Funzionalità Implementate
 
-* **Barra di ricerca per libri** che sfrutta l'API Google Books
+* Barra di ricerca per libri che sfrutta l'API Google Books
 * Possibilità di salvare localmente libri come preferiti tramite pulsante
 * Possibilità di cercare libri per categoria (genere)
 * Pagina home con libri consigliati e popolari
