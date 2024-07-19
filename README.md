@@ -1,16 +1,72 @@
-# prova
+# Relazione Progetto d'Esame
 
-A new Flutter project.
+## BooksApp
 
-## Getting Started
+L'applicazione **BooksApp** permette all'utente di cercare libri e salvarli come preferiti.
 
-This project is a starting point for a Flutter application.
+### Funzionalità Implementate
 
-A few resources to get you started if this is your first Flutter project:
+* **Barra di ricerca per libri** che sfrutta l'API Google Books
+* Possibilità di salvare localmente libri come preferiti tramite pulsante
+* Possibilità di cercare libri per categoria (genere)
+* Pagina home con libri consigliati e popolari
+* Pagina opzioni con pulsante per la dark mode
+* Barra di navigazione tra le schermate principali
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Possibili Implementazioni Future
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Implementazione Login e gestione Account utente
+* Implementazione sistema di notifiche per nuovi libri
+* Implementazione libri popolari sfruttando un punteggio di rating
+* Implementazione ulteriori impostazioni nella schermata Settings
+
+## Analisi del Dominio applicativo
+
+La pagina principale è **MainScreen** che permette di navigare verso le altre schermate tramite barra di navigazione posizionata sul fondo.
+
+### HomeScreen
+
+L'applicazione, tuttavia, parte da una **HomeScreen** che mostra due widget:
+    - Il primo widget contiene un singolo libro consigliato.
+    - Il secondo consiste in una lista di libri popolari.
+
+### SearchScreen
+
+**SearchScreen** permette di visualizzare due widget atti alla ricerca di libri:
+    - Il primo è una griglia di icone che rappresentano i vari generi di libri su cui ricercare.
+    - Il secondo è un bottone che porta ad una barra di ricerca che permette di ottenere libri basandosi sul titolo.
+Entrambi gli widget restituiscono una lista di libri con annesso bottone che rende possibile la loro aggiunta ai preferiti.
+
+### FavouriteBooksScreen
+
+**FavouriteBooksScreen** permette di visualizzare i libri salvati come preferiti tramite apposito bottone presente nella altre schermate.
+Questa funzione di salvataggio è stata implementata tramite l'utilizzo di SharedPreferences.
+
+### BookPage
+
+Pagina accessibile non tramite barra di navigazione, ma cliccando su un libro ottenuto da qualsiasi widget delle schermate sopra citate.
+Dà ulteriori informazioni sul singolo libro, se disponibili, come:
+    - Descrizione
+    - Rating
+
+### SettingsScreen
+
+**SettingsScreen** implementa funzionalità di utility varie.
+L'unica funzionalità effettivamente implementata è la possibilità di passare alla modalità scura di visualizzazione delle varie schermate.
+Le altre funzionalità sono semplici placeholder per implementazione futura.
+
+## Migliorie Possibili
+
+### Migliore salvataggio dei dati
+
+L'utilizzo di SharedPreferences è stato prediletto, in quanto più semplice e meno time consuming, tuttavia per un'implementazione ottimale del salvataggio dati si potrebbe utilizzare la libreria Flutter ORM.
+ORM permetterebbe una maggiore persistenza dei dati delle API tramite PrismaEngine (PrismaJS/TS Client).
+
+## Commenti Finali
+Le API utilizzate sfruttano un'unica chiave salvata nelle **local.properties** come **MAPS_API_KEY**.\
+\
+L'utilizzo dell'IDE **Android Studio** è stato, a tratti, ostico a causa di errori di compilazione o build
+che si risolvevano semplicemente rebuildando il codice o restartando l'IDE.\
+\
+Esiste sicuramente un ampio margine di miglioramento, sia dal punto di vista del design che del codice,
+ma come prima applicazione Android Kotlin speriamo risulti apprezzabile.
